@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
+  
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', 'DejaVu Sans', Tahoma, Arial, sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    direction: rtl;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  /* ── COVER PAGE ─────────────────────────────────── */
+  .cover {
+    width: 100%;
+    min-height: 297mm;
+    background: linear-gradient(145deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 65%);
+  }
+
+  .cover-badge {
+    background: rgba(59,130,246,0.15);
+    border: 1px solid rgba(59,130,246,0.4);
+    color: #93c5fd;
+    padding: 6px 20px;
+    border-radius: 30px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+  }
+
+  .cover h1 {
+    font-size: 42px;
+    font-weight: 900;
+    color: #f1f5f9;
+    text-align: center;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  .cover h1 span { color: #38bdf8; }
+
+  .cover-sub {
+    font-size: 16px;
+    color: #94a3b8;
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .cover-divider {
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #06b6d4);
+    border-radius: 2px;
+    margin: 0 auto 50px;
+  }
+
+  .cover-cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 600px;
+  }
+
+  .cover-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 20px 28px;
+    text-align: center;
+    color: #e2e8f0;
+    min-width: 130px;
+  }
+
+  .cover-card .num {
+    font-size: 32px;
+    font-weight: 900;
+    color: #38bdf8;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .cover-card .lbl {
+    font-size: 11px;
+    color: #64748b;
+  }
+
+  .cover-footer {
+    position: absolute;
+    bottom: 30px;
+    color: #475569;
+    font-size: 11px;
+    text-align: center;
+  }
+
+  /* ── PAGE LAYOUT ─────────────────────────────────── */
+  .page {
+    padding: 18mm 18mm 14mm;
+    page-break-after: always;
+    background: #f8fafc;
+    min-height: 297mm;
+  }
+  .page:last-child { page-break-after: avoid; }
+
+  /* ── PAGE HEADER ─────────────────────────────────── */
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 14px;
+    margin-bottom: 28px;
+  }
+
+  .page-header-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #0f172a;
+  }
+
+  .page-header-title span { color: #3b82f6; }
+
+  .section-badge {
+    background: #eff6ff;
+    color: #3b82f6;
+    border: 1px solid #bfdbfe;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  /* ── SECTION TITLE ───────────────────────────────── */
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 24px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 18px;
+    background: #3b82f6;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ── FEATURE CARDS ───────────────────────────────── */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .feature-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 4px;
+    height: 100%;
+  }
+
+  .feature-card.blue::before  { background: #3b82f6; }
+  .feature-card.cyan::before  { background: #06b6d4; }
+  .feature-card.green::before { background: #10b981; }
+  .feature-card.amber::before { background: #f59e0b; }
+  .feature-card.purple::before{ background: #8b5cf6; }
+  .feature-card.red::before   { background: #ef4444; }
+  .feature-card.indigo::before{ background: #6366f1; }
+  .feature-card.teal::before  { background: #14b8a6; }
+
+  .feature-icon {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .feature-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 5px;
+  }
+
+  .feature-desc {
+    font-size: 11.5px;
+    color: #64748b;
+    line-height: 1.7;
+  }
+
+  /* ── FLOW STEPS ──────────────────────────────────── */
+  .flow-steps { margin: 16px 0; }
+
+  .flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 6px;
+    position: relative;
+  }
+
+  .flow-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .step-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .step-line {
+    width: 2px;
+    height: 24px;
+    background: #e2e8f0;
+    margin: 3px 0;
+  }
+
+  .flow-step:last-child .step-line { display: none; }
+
+  .step-body {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 12px 16px;
+    flex: 1;
+    margin-bottom: 6px;
+  }
+
+  .step-body-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 4px;
+  }
+
+  .step-body-desc {
+    font-size: 11.5px;
+    color: #64748b;
+    line-height: 1.7;
+  }
+
+  /* ── ALERT SECTION ───────────────────────────────── */
+  .alert-timeline {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 20px;
+    margin: 16px 0;
+  }
+
+  .alert-timeline-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .timeline-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 10px;
+  }
+
+  .tl-item {
+    flex: 1;
+    text-align: center;
+    position: relative;
+  }
+
+  .tl-item::after {
+    content: '';
+    position: absolute;
+    top: 18px;
+    left: 0;
+    width: 50%;
+    height: 2px;
+    background: #e2e8f0;
+  }
+
+  .tl-item:last-child::after { display: none; }
+
+  .tl-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tl-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 3px;
+  }
+
+  .tl-sub {
+    font-size: 10px;
+    color: #94a3b8;
+    line-height: 1.4;
+  }
+
+  /* Alert boxes */
+  .alert-box {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 10px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .alert-box.warning {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+  }
+
+  .alert-box.danger {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+  }
+
+  .alert-box.info {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+  }
+
+  .alert-box.success {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+  }
+
+  .alert-icon { font-size: 20px; flex-shrink: 0; }
+
+  .alert-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .alert-box.warning .alert-title { color: #92400e; }
+  .alert-box.danger  .alert-title { color: #991b1b; }
+  .alert-box.info    .alert-title { color: #1e40af; }
+  .alert-box.success .alert-title { color: #14532d; }
+
+  .alert-text {
+    font-size: 11.5px;
+    color: #64748b;
+    line-height: 1.7;
+  }
+
+  /* ── NOTIFICATION MOCKUP ─────────────────────────── */
+  .notif-mockup {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 14px 0;
+  }
+
+  .notif-header {
+    background: #0f172a;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .notif-header-title {
+    color: #94a3b8;
+    font-size: 11px;
+  }
+
+  .notif-header-dot {
+    display: flex;
+    gap: 5px;
+  }
+
+  .dot-r { width:10px; height:10px; border-radius:50%; background:#ef4444; }
+  .dot-y { width:10px; height:10px; border-radius:50%; background:#f59e0b; }
+  .dot-g { width:10px; height:10px; border-radius:50%; background:#10b981; }
+
+  .notif-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .notif-item:last-child { border-bottom: none; }
+
+  .notif-dot-col {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  .notif-content { flex: 1; }
+
+  .notif-text {
+    font-size: 12px;
+    color: #1e293b;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .notif-meta {
+    font-size: 10.5px;
+    color: #94a3b8;
+  }
+
+  .notif-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .badge-red   { background: #fef2f2; color: #ef4444; }
+  .badge-amber { background: #fffbeb; color: #f59e0b; }
+  .badge-blue  { background: #eff6ff; color: #3b82f6; }
+  .badge-green { background: #f0fdf4; color: #10b981; }
+
+  /* ── INFO TABLE ───────────────────────────────────── */
+  .info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+  }
+
+  .info-table th {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  .info-table td {
+    padding: 9px 14px;
+    font-size: 12px;
+    color: #334155;
+    border-bottom: 1px solid #f1f5f9;
+    text-align: right;
+  }
+
+  .info-table tr:last-child td { border-bottom: none; }
+  .info-table tr:nth-child(even) td { background: #f8fafc; }
+
+  /* ── SUMMARY BOX ─────────────────────────────────── */
+  .summary-box {
+    background: linear-gradient(135deg, #0f172a, #1e3a5f);
+    border-radius: 14px;
+    padding: 24px;
+    color: #e2e8f0;
+    margin-top: 20px;
+  }
+
+  .summary-box h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: #38bdf8;
+    text-align: center;
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .summary-item .s-num {
+    font-size: 28px;
+    font-weight: 900;
+    color: #38bdf8;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .summary-item .s-lbl {
+    font-size: 11px;
+    color: #64748b;
+  }
+
+  /* ── PAGE NUMBER FOOTER ───────────────────────────── */
+  .page-footer {
+    position: fixed;
+    bottom: 10mm;
+    width: calc(100% - 36mm);
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #94a3b8;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 6px;
+  }
+
+  @media print {
+    .page { page-break-after: always; }
+    .cover { page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  COVER PAGE                                           -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">وثيقة المشروع — نظام الاشتراكات</div>
+  <h1>نظام إدارة <span>الاشتراكات</span></h1>
+  <p class="cover-sub">برنامج المحاسبة — دليل شامل للعميل</p>
+  <div class="cover-divider"></div>
+  <div class="cover-cards">
+    <div class="cover-card">
+      <div class="num">٥</div>
+      <div class="lbl">أقسام رئيسية</div>
+    </div>
+    <div class="cover-card">
+      <div class="num">٣</div>
+      <div class="lbl">مستويات التنبيه</div>
+    </div>
+    <div class="cover-card">
+      <div class="num">٢</div>
+      <div class="lbl">نمط الدفع</div>
+    </div>
+  </div>
+  <div class="cover-footer">
+    تم إعداد هذه الوثيقة كمقترح مشروع — جميع التفاصيل قابلة للنقاش والتعديل
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  PAGE 1 — OVERVIEW & SECTIONS                        -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">نظرة عامة على <span>النظام</span></div>
+    <div class="section-badge">القسم الأول</div>
+  </div>
+
+  <p style="color:#475569; font-size:12.5px; line-height:1.9; margin-bottom:20px;">
+    هذا النظام عبارة عن موقع ويب متكامل يُمكّنك من إدارة عملاء برنامج المحاسبة بشكل كامل. من إضافة العميل وتحديد باقته، وحتى تتبع مدفوعاته وتجديد اشتراكه — كل ذلك من لوحة تحكم واحدة سهلة الاستخدام.
+  </p>
+
+  <div class="section-title">أقسام النظام الرئيسية</div>
+
+  <div class="feature-grid">
+    <div class="feature-card blue">
+      <div class="feature-icon">👥</div>
+      <div class="feature-title">إدارة العملاء</div>
+      <div class="feature-desc">إضافة وتعديل وعرض جميع بيانات عملائك — اسم الشركة، رقم التواصل، وعدد الفروع.</div>
+    </div>
+    <div class="feature-card cyan">
+      <div class="feature-icon">📦</div>
+      <div class="feature-title">إدارة الباقات</div>
+      <div class="feature-desc">تحديد الباقات التي تقدمها، مع تخصيص الأسعار الشهرية والسنوية وعدد المستخدمين لكل باقة.</div>
+    </div>
+    <div class="feature-card green">
+      <div class="feature-icon">🔄</div>
+      <div class="feature-title">إدارة الاشتراكات</div>
+      <div class="feature-desc">ربط كل عميل بالباقة المناسبة، وتتبع تاريخ بداية ونهاية الاشتراك بشكل تلقائي.</div>
+    </div>
+    <div class="feature-card amber">
+      <div class="feature-icon">🧾</div>
+      <div class="feature-title">الفواتير والمدفوعات</div>
+      <div class="feature-desc">إنشاء فواتير تلقائية مع كل اشتراك، وتسجيل حالة الدفع لكل عميل.</div>
+    </div>
+    <div class="feature-card purple">
+      <div class="feature-icon">🔔</div>
+      <div class="feature-title">التنبيهات والإشعارات</div>
+      <div class="feature-desc">تنبيهات تلقائية قبل انتهاء الاشتراك تصل للمسؤول وللعميل مباشرةً.</div>
+    </div>
+    <div class="feature-card indigo">
+      <div class="feature-icon">📊</div>
+      <div class="feature-title">لوحة التحكم الرئيسية</div>
+      <div class="feature-desc">نظرة فورية على عدد العملاء النشطين، الاشتراكات المنتهية قريباً، والإيرادات الشهرية.</div>
+    </div>
+  </div>
+
+  <div class="summary-box">
+    <h3>ماذا يحل هذا النظام؟</h3>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="s-num">✓</div>
+        <div class="s-lbl">لا متابعة يدوية لانتهاء الاشتراكات</div>
+      </div>
+      <div class="summary-item">
+        <div class="s-num">✓</div>
+        <div class="s-lbl">لا فواتير ضائعة أو منسية</div>
+      </div>
+      <div class="summary-item">
+        <div class="s-num">✓</div>
+        <div class="s-lbl">كل بيانات عملائك في مكان واحد</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  PAGE 2 — FLOW: ADMIN ADDS CLIENT                    -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">كيف يعمل <span>النظام؟</span></div>
+    <div class="section-badge">القسم الثاني</div>
+  </div>
+
+  <div class="section-title">رحلة إضافة عميل جديد — خطوة بخطوة</div>
+
+  <div class="flow-steps">
+
+    <div class="flow-step">
+      <div class="flow-left">
+        <div class="step-circle" style="background:#3b82f6;">١</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-body-title">المسؤول يفتح صفحة إضافة عميل</div>
+        <div class="step-body-desc">يدخل المسؤول اسم الشركة، رقم التواصل، وعدد الفروع. بيانات بسيطة وسريعة.</div>
+      </div>
+    </div>
+
+    <div class="flow-step">
+      <div class="flow-left">
+        <div class="step-circle" style="background:#06b6d4;">٢</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-body-title">اختيار الباقة ونوع الاشتراك</div>
+        <div class="step-body-desc">يختار المسؤول الباقة المناسبة للعميل (حسب عدد المستخدمين)، ثم يحدد هل الاشتراك شهري أم سنوي.</div>
+      </div>
+    </div>
+
+    <div class="flow-step">
+      <div class="flow-left">
+        <div class="step-circle" style="background:#10b981;">٣</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-body-title">الاشتراك يُفعَّل تلقائياً فور الحفظ</div>
+        <div class="step-body-desc">بمجرد الضغط على "حفظ"، يصبح الاشتراك نشطاً فوراً — النظام يحسب تاريخ البداية والنهاية تلقائياً دون أي تدخل يدوي.</div>
+      </div>
+    </div>
+
+    <div class="flow-step">
+      <div class="flow-left">
+        <div class="step-circle" style="background:#f59e0b;">٤</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-body-title">فاتورة تُنشأ تلقائياً</div>
+        <div class="step-body-desc">في نفس اللحظة، ينشئ النظام فاتورة بمبلغ الاشتراك وتاريخه. تبقى الفاتورة "غير مدفوعة" حتى يؤكد المسؤول استلام الدفع.</div>
+      </div>
+    </div>
+
+    <div class="flow-step">
+      <div class="flow-left">
+        <div class="step-circle" style="background:#8b5cf6;">٥</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-body-title">النظام يراقب تواريخ الانتهاء يومياً</div>
+        <div class="step-body-desc">كل يوم، يفحص النظام تلقائياً تواريخ انتهاء جميع الاشتراكات — بدون أي تدخل من المسؤول.</div>
+      </div>
+    </div>
+
+    <div class="flow-step">
+      <div class="flow-left">
+        <div class="step-circle" style="background:#ef4444;">٦</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-body-title">تنبيهات متعددة قبل الانتهاء</div>
+        <div class="step-body-desc">تصدر تنبيهات تلقائية للمسؤول والعميل قبل ٣٠ يوماً، ثم ٧ أيام، ثم يوم الانتهاء — تفاصيل كاملة في القسم التالي.</div>
+      </div>
+    </div>
+
+    <div class="flow-step">
+      <div class="flow-left">
+        <div class="step-circle" style="background:#f97316;">٧</div>
+      </div>
+      <div class="step-body">
+        <div class="step-body-title">المسؤول يجدد أو يوقف الاشتراك</div>
+        <div class="step-body-desc">بضغطة زر واحدة، يجدد المسؤول الاشتراك لفترة جديدة، أو يرقّيه لباقة أعلى، أو يوقفه إن لم يدفع العميل.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  PAGE 3 — ALERTS & NOTIFICATIONS                     -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">التنبيهات <span>والإشعارات</span></div>
+    <div class="section-badge">القسم الثالث</div>
+  </div>
+
+  <p style="color:#475569; font-size:12.5px; line-height:1.9; margin-bottom:16px;">
+    النظام يُرسل تنبيهات تلقائية على ثلاث مراحل قبل انتهاء أي اشتراك — للمسؤول وللعميل معاً. الهدف أن لا يُفاجأ أحد بانتهاء الاشتراك.
+  </p>
+
+  <!-- Timeline -->
+  <div class="alert-timeline">
+    <div class="alert-timeline-title">الجدول الزمني للتنبيهات</div>
+    <div class="timeline-row">
+      <div class="tl-item">
+        <div class="tl-dot" style="background:#eff6ff; border: 2px solid #3b82f6;">📅</div>
+        <div class="tl-label">قبل ٣٠ يوماً</div>
+        <div class="tl-sub">تنبيه مبكر<br/>للتخطيط</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:#fffbeb; border: 2px solid #f59e0b;">⚠️</div>
+        <div class="tl-label">قبل ٧ أيام</div>
+        <div class="tl-sub">تنبيه عاجل<br/>للمتابعة</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:#fef2f2; border: 2px solid #ef4444;">🚨</div>
+        <div class="tl-label">يوم الانتهاء</div>
+        <div class="tl-sub">تنبيه نهائي<br/>قبل الإيقاف</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:#f1f5f9; border: 2px solid #94a3b8;">⛔</div>
+        <div class="tl-label">بعد الانتهاء</div>
+        <div class="tl-sub">الاشتراك<br/>موقوف تلقائياً</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">تفاصيل كل مرحلة</div>
+
+  <div class="alert-box info">
+    <div class="alert-icon">📅</div>
+    <div>
+      <div class="alert-title">التنبيه الأول — قبل ٣٠ يوماً</div>
+      <div class="alert-text">يصل إشعار للمسؤول على لوحة التحكم يُخبره بأن هذا العميل اشتراكه سينتهي خلال شهر. في نفس الوقت، يصل للعميل رسالة (SMS أو بريد إلكتروني) تُذكّره بموعد التجديد مسبقاً — وقت كافٍ للتنسيق وترتيب الدفع.</div>
+    </div>
+  </div>
+
+  <div class="alert-box warning">
+    <div class="alert-icon">⚠️</div>
+    <div>
+      <div class="alert-title">التنبيه الثاني — قبل ٧ أيام</div>
+      <div class="alert-text">تنبيه أكثر إلحاحاً للمسؤول — يظهر بشكل بارز في لوحة التحكم مع اسم العميل وعدد الأيام المتبقية. يصل للعميل أيضاً تذكير ثانٍ بأن الاشتراك سينتهي قريباً جداً ويحتاج للتجديد.</div>
+    </div>
+  </div>
+
+  <div class="alert-box danger">
+    <div class="alert-icon">🚨</div>
+    <div>
+      <div class="alert-title">التنبيه الثالث — يوم الانتهاء</div>
+      <div class="alert-text">في يوم انتهاء الاشتراك، يصل تنبيه أحمر فوري للمسؤول. يُخبره بأن هذا العميل بلغ موعد انتهاء اشتراكه اليوم — ويجب اتخاذ قرار فوري: تجديد أو تعليق.</div>
+    </div>
+  </div>
+
+  <div class="section-title">شكل الإشعارات داخل النظام</div>
+
+  <!-- Notification mockup -->
+  <div class="notif-mockup">
+    <div class="notif-header">
+      <div class="notif-header-title">لوحة التحكم — قسم التنبيهات</div>
+      <div class="notif-header-dot">
+        <div class="dot-r"></div>
+        <div class="dot-y"></div>
+        <div class="dot-g"></div>
+      </div>
+    </div>
+    <div class="notif-item">
+      <div class="notif-dot-col" style="background:#ef4444;"></div>
+      <div class="notif-content">
+        <div class="notif-text">شركة النور للتجارة — اشتراكها انتهى اليوم</div>
+        <div class="notif-meta">الباقة: المتقدمة · ٥ مستخدمين · منذ ٣ دقائق</div>
+      </div>
+      <div class="notif-badge badge-red">منتهي</div>
+    </div>
+    <div class="notif-item">
+      <div class="notif-dot-col" style="background:#f59e0b;"></div>
+      <div class="notif-content">
+        <div class="notif-text">مؤسسة الفيصل — ينتهي اشتراكها خلال ٥ أيام</div>
+        <div class="notif-meta">الباقة: الأساسية · ٢ مستخدمين · منذ ساعة</div>
+      </div>
+      <div class="notif-badge badge-amber">عاجل</div>
+    </div>
+    <div class="notif-item">
+      <div class="notif-dot-col" style="background:#3b82f6;"></div>
+      <div class="notif-content">
+        <div class="notif-text">شركة البركة للمقاولات — ينتهي الاشتراك خلال ٢٨ يوماً</div>
+        <div class="notif-meta">الباقة: المتقدمة · ١٠ مستخدمين · اليوم</div>
+      </div>
+      <div class="notif-badge badge-blue">تنبيه مبكر</div>
+    </div>
+    <div class="notif-item">
+      <div class="notif-dot-col" style="background:#10b981;"></div>
+      <div class="notif-content">
+        <div class="notif-text">شركة الأمل — تم تجديد الاشتراك بنجاح</div>
+        <div class="notif-meta">الباقة: الأساسية · ٣ مستخدمين · أمس</div>
+      </div>
+      <div class="notif-badge badge-green">مجدد</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  PAGE 4 — PACKAGES & SUBSCRIPTION TYPES              -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">الباقات <span>وأنواع الاشتراك</span></div>
+    <div class="section-badge">القسم الرابع</div>
+  </div>
+
+  <div class="section-title">هيكل الباقات</div>
+  <p style="color:#475569; font-size:12px; margin-bottom:14px; line-height:1.8;">
+    الباقات تتفاوت حسب عدد المستخدمين المسموح لهم باستخدام البرنامج. كل باقة لها سعر شهري وسعر سنوي (عادةً السنوي أوفر للعميل).
+  </p>
+
+  <table class="info-table">
+    <tr>
+      <th>اسم الباقة</th>
+      <th>عدد المستخدمين</th>
+      <th>الاشتراك الشهري</th>
+      <th>الاشتراك السنوي</th>
+    </tr>
+    <tr>
+      <td><strong>الباقة الأساسية</strong></td>
+      <td>حتى ٣ مستخدمين</td>
+      <td>يُحدَّد لاحقاً</td>
+      <td>يُحدَّد لاحقاً</td>
+    </tr>
+    <tr>
+      <td><strong>الباقة المتوسطة</strong></td>
+      <td>حتى ١٠ مستخدمين</td>
+      <td>يُحدَّد لاحقاً</td>
+      <td>يُحدَّد لاحقاً</td>
+    </tr>
+    <tr>
+      <td><strong>الباقة المتقدمة</strong></td>
+      <td>حتى ٢٥ مستخدماً</td>
+      <td>يُحدَّد لاحقاً</td>
+      <td>يُحدَّد لاحقاً</td>
+    </tr>
+    <tr>
+      <td><strong>باقة المؤسسات</strong></td>
+      <td>غير محدود</td>
+      <td>يُحدَّد لاحقاً</td>
+      <td>يُحدَّد لاحقاً</td>
+    </tr>
+  </table>
+
+  <div class="section-title">خيارات الدفع المتاحة</div>
+
+  <div class="feature-grid">
+    <div class="feature-card blue">
+      <div class="feature-icon">🏦</div>
+      <div class="feature-title">الدفع اليدوي (الطريقة الأولى)</div>
+      <div class="feature-desc">يدفع العميل عن طريق تحويل بنكي أو كاش. المسؤول يستلم الدفعة ويُسجّلها في النظام يدوياً، ويُفعّل أو يجدد الاشتراك.</div>
+    </div>
+    <div class="feature-card purple">
+      <div class="feature-icon">💳</div>
+      <div class="feature-title">الدفع الإلكتروني — Stripe (الطريقة الثانية)</div>
+      <div class="feature-desc">يدفع العميل بطاقة مدى أو فيزا مباشرةً من رابط خاص. الاشتراك يتجدد تلقائياً عند الاستحقاق بدون أي تدخل.</div>
+    </div>
+  </div>
+
+  <div class="section-title">مقارنة بين طريقتي الدفع</div>
+
+  <table class="info-table">
+    <tr>
+      <th>النقطة</th>
+      <th>الدفع اليدوي</th>
+      <th>Stripe (تلقائي)</th>
+    </tr>
+    <tr>
+      <td>كيف يتم التجديد؟</td>
+      <td>المسؤول يجدد يدوياً</td>
+      <td>تلقائي بالكامل</td>
+    </tr>
+    <tr>
+      <td>هل يحتاج العميل لحساب؟</td>
+      <td>لا</td>
+      <td>يدخل بيانات بطاقته مرة واحدة</td>
+    </tr>
+    <tr>
+      <td>دعم بطاقة مدى؟</td>
+      <td>لا ينطبق</td>
+      <td>نعم، مدعومة</td>
+    </tr>
+    <tr>
+      <td>الجهد المطلوب من المسؤول</td>
+      <td>متابعة دورية</td>
+      <td>شبه صفر</td>
+    </tr>
+    <tr>
+      <td>مناسب لـ</td>
+      <td>بداية التشغيل / عملاء محدودون</td>
+      <td>التوسع وزيادة العملاء</td>
+    </tr>
+  </table>
+
+  <div class="alert-box success">
+    <div class="alert-icon">💡</div>
+    <div>
+      <div class="alert-title">التوصية</div>
+      <div class="alert-text">ننصح بالبدء بالدفع اليدوي في المرحلة الأولى للتشغيل، ثم إضافة خيار Stripe لاحقاً عند التوسع — وهذا يُوفّر في التكلفة ويُسهّل الانطلاق.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  PAGE 5 — CLIENT DATA & SUMMARY                      -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">بيانات العملاء <span>وملخص المشروع</span></div>
+    <div class="section-badge">القسم الخامس</div>
+  </div>
+
+  <div class="section-title">ما الذي يُسجَّل لكل عميل؟</div>
+  <p style="color:#475569; font-size:12px; margin-bottom:14px; line-height:1.8;">
+    عند إضافة أي عميل في النظام، يتم حفظ المعلومات التالية لضمان سهولة المتابعة والتواصل:
+  </p>
+
+  <div class="feature-grid">
+    <div class="feature-card teal">
+      <div class="feature-icon">🏢</div>
+      <div class="feature-title">اسم الشركة</div>
+      <div class="feature-desc">الاسم الرسمي للجهة أو الشركة المشتركة في البرنامج.</div>
+    </div>
+    <div class="feature-card blue">
+      <div class="feature-icon">📱</div>
+      <div class="feature-title">رقم التواصل</div>
+      <div class="feature-desc">رقم الجوال المرتبط بالعميل — يُستخدم للتواصل وإرسال الإشعارات.</div>
+    </div>
+    <div class="feature-card cyan">
+      <div class="feature-icon">🏪</div>
+      <div class="feature-title">عدد الفروع</div>
+      <div class="feature-desc">عدد المواقع أو الفروع التي تستخدم البرنامج.</div>
+    </div>
+    <div class="feature-card green">
+      <div class="feature-icon">📋</div>
+      <div class="feature-title">سجل الاشتراكات</div>
+      <div class="feature-desc">تاريخ كامل بكل الاشتراكات السابقة والحالية للعميل.</div>
+    </div>
+    <div class="feature-card amber">
+      <div class="feature-icon">🧾</div>
+      <div class="feature-title">سجل الفواتير</div>
+      <div class="feature-desc">جميع الفواتير المرتبطة بالعميل مع حالة كل فاتورة (مدفوعة / غير مدفوعة).</div>
+    </div>
+    <div class="feature-card red">
+      <div class="feature-icon">🔴</div>
+      <div class="feature-title">حالة الاشتراك</div>
+      <div class="feature-desc">نشط، منتهٍ، أو موقوف — تظهر بشكل فوري في أي مكان داخل النظام.</div>
+    </div>
+  </div>
+
+  <div class="section-title">ملخص ما يقدمه النظام</div>
+
+  <table class="info-table">
+    <tr>
+      <th>الميزة</th>
+      <th>الوصف</th>
+    </tr>
+    <tr>
+      <td>تفعيل الاشتراك</td>
+      <td>تلقائي فور الإضافة — بدون خطوات إضافية</td>
+    </tr>
+    <tr>
+      <td>إنشاء الفواتير</td>
+      <td>تلقائي مع كل اشتراك جديد أو تجديد</td>
+    </tr>
+    <tr>
+      <td>تنبيهات الانتهاء</td>
+      <td>٣ مراحل: قبل ٣٠ يوم — قبل ٧ أيام — يوم الانتهاء</td>
+    </tr>
+    <tr>
+      <td>إشعارات العميل</td>
+      <td>SMS أو بريد إلكتروني تلقائي في كل مرحلة</td>
+    </tr>
+    <tr>
+      <td>تجديد الاشتراك</td>
+      <td>بضغطة زر واحدة من المسؤول</td>
+    </tr>
+    <tr>
+      <td>ترقية الباقة</td>
+      <td>يمكن الترقية في أي وقت من ملف العميل</td>
+    </tr>
+    <tr>
+      <td>تصدير الفواتير</td>
+      <td>PDF جاهز للطباعة أو الإرسال</td>
+    </tr>
+    <tr>
+      <td>لوحة التحكم</td>
+      <td>إحصائيات فورية: إيرادات، عملاء نشطون، اشتراكات منتهية</td>
+    </tr>
+  </table>
+
+  <div class="summary-box" style="margin-top: 22px;">
+    <h3>هذا النظام صُمِّم خصيصاً لك</h3>
+    <p style="text-align:center; color:#94a3b8; font-size:12px; margin-bottom:18px; line-height:1.8;">
+      كل التفاصيل في هذه الوثيقة مبنية على احتياجاتك — الباقات، البيانات، وآلية التنبيهات. جميعها قابلة للنقاش والتعديل قبل بدء التطوير.
+    </p>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <div class="s-num">٥</div>
+        <div class="s-lbl">أقسام رئيسية في النظام</div>
+      </div>
+      <div class="summary-item">
+        <div class="s-num">٣</div>
+        <div class="s-lbl">مراحل تنبيه تلقائية</div>
+      </div>
+      <div class="summary-item">
+        <div class="s-num">٢</div>
+        <div class="s-lbl">خيارات دفع متاحة</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
