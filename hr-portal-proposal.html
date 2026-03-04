@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مشروع بوابة الموارد البشرية - Organiza</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #0A1628;
+    --accent: #2563EB;
+    --accent-light: #3B82F6;
+    --gold: #F59E0B;
+    --surface: #F8FAFC;
+    --card: #FFFFFF;
+    --text: #0F172A;
+    --muted: #64748B;
+    --border: #E2E8F0;
+    --success: #10B981;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--surface);
+    color: var(--text);
+    line-height: 1.7;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* ========= COVER PAGE ========= */
+  .cover {
+    min-height: 100vh;
+    background: var(--primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(37,99,235,0.25) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -150px; left: -150px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(245,158,11,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .cover-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(37,99,235,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(37,99,235,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .cover-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(37,99,235,0.2);
+    border: 1px solid rgba(37,99,235,0.4);
+    color: #93C5FD;
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .cover-badge::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: #3B82F6;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.3)} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  .cover-logo {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 72px;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -2px;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .cover-logo span {
+    color: var(--gold);
+  }
+
+  .cover-tagline {
+    font-size: 20px;
+    color: #94A3B8;
+    margin-top: 16px;
+    font-weight: 400;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .cover-divider {
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    margin: 40px auto;
+    border-radius: 2px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .cover-title {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #F1F5F9;
+    max-width: 700px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    margin-top: 60px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.6s 0.5s ease both;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cover-meta-item {
+    text-align: center;
+  }
+
+  .cover-meta-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #475569;
+    margin-bottom: 6px;
+  }
+
+  .cover-meta-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: #CBD5E1;
+  }
+
+  .cover-footer {
+    position: absolute;
+    bottom: 40px;
+    left: 0; right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 60px;
+    font-size: 12px;
+    color: #334155;
+    z-index: 1;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* ========= CONTENT PAGES ========= */
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    page-break-after: always;
+  }
+
+  .page-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .page-num {
+    width: 48px; height: 48px;
+    background: var(--primary);
+    color: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .page-title {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  .page-subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* ========= SECTION HEADERS ========= */
+  .section-title {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 16px;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title::before {
+    content: '';
+    width: 4px; height: 24px;
+    background: linear-gradient(to bottom, var(--accent), var(--gold));
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ========= PROBLEM STATEMENT ========= */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 24px;
+  }
+
+  .problem-card {
+    background: #FFF7ED;
+    border: 1px solid #FED7AA;
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .problem-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 60px; height: 60px;
+    background: rgba(245,158,11,0.1);
+    border-radius: 0 16px 0 60px;
+  }
+
+  .problem-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .problem-title {
+    font-weight: 700;
+    font-size: 15px;
+    color: #92400E;
+    margin-bottom: 8px;
+  }
+
+  .problem-desc {
+    font-size: 13px;
+    color: #78350F;
+    line-height: 1.6;
+  }
+
+  /* ========= CARDS ========= */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .card-blue {
+    background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+    border-color: #BFDBFE;
+  }
+
+  /* ========= FEATURES GRID ========= */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 24px;
+  }
+
+  .feature-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: all 0.2s;
+  }
+
+  .feature-card:hover {
+    border-color: var(--accent-light);
+    box-shadow: 0 4px 12px rgba(37,99,235,0.08);
+  }
+
+  .feature-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .icon-blue { background: #EFF6FF; }
+  .icon-green { background: #F0FDF4; }
+  .icon-purple { background: #FAF5FF; }
+  .icon-orange { background: #FFF7ED; }
+  .icon-red { background: #FFF1F2; }
+  .icon-teal { background: #F0FDFA; }
+
+  .feature-content h4 {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--primary);
+    margin-bottom: 6px;
+  }
+
+  .feature-content p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ========= USER ROLES ========= */
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 24px;
+  }
+
+  .role-card {
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    border: 2px solid transparent;
+  }
+
+  .role-card.admin { background: linear-gradient(135deg, #0A1628, #1E3A5F); border-color: #1E3A5F; }
+  .role-card.hr { background: linear-gradient(135deg, #1E3A5F, #2563EB); border-color: #3B82F6; }
+  .role-card.employee { background: linear-gradient(135deg, #064E3B, #059669); border-color: #10B981; }
+
+  .role-avatar {
+    font-size: 40px;
+    margin-bottom: 12px;
+  }
+
+  .role-name {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 8px;
+  }
+
+  .role-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+
+  .role-perms {
+    list-style: none;
+    text-align: right;
+  }
+
+  .role-perms li {
+    font-size: 12px;
+    color: rgba(255,255,255,0.8);
+    padding: 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .role-perms li::before {
+    content: '✓';
+    color: var(--gold);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ========= MODULES TABLE ========= */
+  .modules-list {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .module-row {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .module-num {
+    width: 36px; height: 36px;
+    background: var(--primary);
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .module-icon { font-size: 24px; }
+
+  .module-info { flex: 1; }
+
+  .module-info h4 {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--primary);
+  }
+
+  .module-info p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .module-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .tag {
+    background: #EFF6FF;
+    color: var(--accent);
+    border: 1px solid #BFDBFE;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .tag.green { background: #F0FDF4; color: #059669; border-color: #A7F3D0; }
+  .tag.purple { background: #FAF5FF; color: #7C3AED; border-color: #DDD6FE; }
+
+  /* ========= TIMELINE ========= */
+  .timeline {
+    margin-top: 24px;
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    right: 119px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 28px;
+    position: relative;
+    align-items: flex-start;
+  }
+
+  .timeline-phase {
+    width: 100px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .timeline-phase-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .timeline-phase-duration {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  .timeline-dot {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px var(--border);
+  }
+
+  .dot-1 { background: #DBEAFE; }
+  .dot-2 { background: #D1FAE5; }
+  .dot-3 { background: #EDE9FE; }
+  .dot-4 { background: #FEF3C7; }
+  .dot-5 { background: #FFE4E6; }
+
+  .timeline-content {
+    flex: 1;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+  }
+
+  .timeline-content h4 {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+
+  .timeline-tasks {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .timeline-tasks li {
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 8px;
+  }
+
+  /* ========= TECH STACK ========= */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .tech-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+
+  .tech-emoji { font-size: 32px; margin-bottom: 10px; }
+
+  .tech-category {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .tech-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--primary);
+  }
+
+  .tech-desc {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ========= STATS ROW ========= */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 24px;
+  }
+
+  .stat-card {
+    background: var(--primary);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    color: white;
+  }
+
+  .stat-value {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 8px;
+  }
+
+  /* ========= OBJECTIVES ========= */
+  .objectives-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .objective-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .obj-num {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--accent), #7C3AED);
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .obj-text {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ========= INTRO TEXT ========= */
+  .intro-text {
+    font-size: 15px;
+    color: #374151;
+    line-height: 1.9;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    border-right: 5px solid var(--accent);
+  }
+
+  /* ========= DELIVERABLES ========= */
+  .deliverables-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .deliverable-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    text-align: center;
+  }
+
+  .deliverable-icon { font-size: 32px; margin-bottom: 12px; }
+
+  .deliverable-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--primary);
+    margin-bottom: 6px;
+  }
+
+  .deliverable-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ========= HIGHLIGHT BOX ========= */
+  .highlight-box {
+    background: linear-gradient(135deg, #0A1628, #1E3A5F);
+    border-radius: 20px;
+    padding: 32px;
+    color: white;
+    margin-top: 32px;
+    text-align: center;
+  }
+
+  .highlight-box h3 {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .highlight-box p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* ========= TABLE OF CONTENTS ========= */
+  .toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    margin-top: 24px;
+  }
+
+  .toc-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--border);
+    gap: 16px;
+  }
+
+  .toc-item:last-child { border-bottom: none; }
+
+  .toc-num {
+    width: 36px; height: 36px;
+    background: #EFF6FF;
+    color: var(--accent);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .toc-title {
+    flex: 1;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text);
+  }
+
+  .toc-page {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* ========= COMPARISON TABLE ========= */
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 24px;
+    font-size: 13px;
+  }
+
+  .comparison-table th {
+    background: var(--primary);
+    color: white;
+    padding: 14px 20px;
+    text-align: right;
+    font-weight: 600;
+  }
+
+  .comparison-table th:first-child { border-radius: 12px 0 0 0; }
+  .comparison-table th:last-child { border-radius: 0 12px 0 0; }
+
+  .comparison-table td {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .comparison-table tr:nth-child(even) td { background: #F8FAFC; }
+  .comparison-table tr:last-child td { border-bottom: none; }
+
+  .check-yes { color: var(--success); font-size: 16px; }
+  .check-no { color: #EF4444; font-size: 16px; }
+
+  /* ========= PRINT ========= */
+  @media print {
+    body { font-size: 12px; }
+    .cover { page-break-after: always; min-height: 100vh; }
+    .page { page-break-after: always; }
+    .feature-card:hover { box-shadow: none; border-color: var(--border); }
+  }
+
+  /* ========= RESPONSIVE ========= */
+  @media (max-width: 768px) {
+    .problem-grid, .features-grid, .roles-grid, .tech-grid,
+    .stats-row, .objectives-grid, .deliverables-grid {
+      grid-template-columns: 1fr;
+    }
+    .cover-logo { font-size: 48px; }
+    .cover-title { font-size: 26px; }
+  }
+
+  .page-break { page-break-after: always; margin-bottom: 0; }
+  
+  .value-prop {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 24px;
+  }
+
+  .value-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+  }
+
+  .value-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .value-item h4 {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--primary);
+    margin-bottom: 4px;
+  }
+
+  .value-item p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!--                      COVER PAGE                             -->
+<!-- ============================================================ -->
+<div class="cover">
+  <div class="cover-grid"></div>
+
+  <div class="cover-logo">Organ<span>iza</span></div>
+  <div class="cover-tagline">بوابة الموارد البشرية الذكية — SaaS Platform</div>
+
+  <div class="cover-divider"></div>
+
+  <div class="cover-title">
+    منصة سحابية متكاملة لإدارة الموارد البشرية في المؤسسات الصغيرة والمتوسطة
+  </div>
+
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">نوع المشروع</div>
+      <div class="cover-meta-value">SaaS Web Application</div>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <span>مقدم إلى: لجنة مشاريع التخرج</span>
+    <span>تاريخ التقديم: ٢٠٢٥</span>
+    <span>Organiza — Graduation Project Proposal</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--                  PAGE 1 — TABLE OF CONTENTS                 -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">📋</div>
+    <div>
+      <div class="page-title">فهرس المحتويات</div>
+      <div class="page-subtitle">هيكل البروبوزال ومحاوره الرئيسية</div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-item">
+      <div class="toc-num">١</div>
+      <div class="toc-title">الملخص التنفيذي — نظرة عامة على المشروع</div>
+      <div class="toc-page">صفحة ٢</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-num">٢</div>
+      <div class="toc-title">المشكلة والفرصة — سبب الحاجة لهذا المشروع</div>
+      <div class="toc-page">صفحة ٣</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-num">٣</div>
+      <div class="toc-title">أهداف المشروع — ما نسعى لتحقيقه</div>
+      <div class="toc-page">صفحة ٤</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-num">٤</div>
+      <div class="toc-title">المستخدمون والأدوار — من سيستخدم النظام</div>
+      <div class="toc-page">صفحة ٤</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-num">٥</div>
+      <div class="toc-title">وحدات ومميزات النظام — الـ Core Features</div>
+      <div class="toc-page">صفحة ٥</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-num">٦</div>
+      <div class="toc-title">التقنيات المستخدمة — Tech Stack</div>
+      <div class="toc-page">صفحة ٦</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-num">٧</div>
+      <div class="toc-title">خطة العمل والجدول الزمني</div>
+      <div class="toc-page">صفحة ٧</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-num">٨</div>
+      <div class="toc-title">المخرجات النهائية — Deliverables</div>
+      <div class="toc-page">صفحة ٨</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-num">٩</div>
+      <div class="toc-title">الخاتمة والقيمة الأكاديمية</div>
+      <div class="toc-page">صفحة ٨</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 32px; background: #F0FDF4; border: 1px solid #A7F3D0; border-radius: 16px; padding: 24px; display: flex; gap: 16px; align-items: flex-start;">
+    <span style="font-size: 28px;">💡</span>
+    <div>
+      <div style="font-weight: 700; color: #065F46; margin-bottom: 6px;">ملاحظة للمراجع</div>
+      <div style="font-size: 13px; color: #047857; line-height: 1.7;">
+        هذا البروبوزال يقدم مشروعاً حقيقياً وعملياً لمنصة SaaS لإدارة الموارد البشرية. المشروع يجمع بين التحدي التقني في بناء تطبيق متعدد المستأجرين (Multi-tenant) والأثر العملي الواضح على سوق العمل المحلي. يُعد المشروع مناسباً لفريق من ٣–٤ طلاب.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--                  PAGE 2 — EXECUTIVE SUMMARY                 -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">١</div>
+    <div>
+      <div class="page-title">الملخص التنفيذي</div>
+      <div class="page-subtitle">نظرة عامة على مشروع Organiza</div>
+    </div>
+  </div>
+
+  <div class="intro-text">
+    <strong>Organiza</strong> هي منصة ويب سحابية (SaaS) متكاملة مصممة لتحويل طريقة إدارة الموارد البشرية في الشركات الصغيرة والمتوسطة. تتيح المنصة للشركات إدارة دورة حياة الموظف بالكامل — من التوظيف والإعداد، مروراً بتتبع الحضور والإجازات وتقييم الأداء، وصولاً إلى إدارة الرواتب والتقارير — كل ذلك من خلال واجهة واحدة سهلة الاستخدام وقابلة للوصول من أي مكان.
+    <br><br>
+    المشروع يُعالج فجوة حقيقية في السوق: معظم الشركات الصغيرة لا تمتلك نظام HR احترافي وتعتمد على الإكسيل والأوراق، بينما الأنظمة المتاحة إما غالية جداً أو معقدة. <strong>Organiza</strong> تقدم الحل الأمثل بنموذج اشتراك ميسور التكلفة.
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value">٧</div>
+      <div class="stat-label">وحدات رئيسية في النظام</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">٣</div>
+      <div class="stat-label">أدوار مختلفة للمستخدمين</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">٥</div>
+      <div class="stat-label">أشهر مدة التطوير</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">SaaS</div>
+      <div class="stat-label">نموذج المنصة متعدد المستأجرين</div>
+    </div>
+  </div>
+
+  <div class="section-title">لماذا Organiza يستحق الاختيار كمشروع تخرج؟</div>
+
+  <div class="value-prop">
+    <div class="value-item">
+      <div class="value-icon">🎯</div>
+      <div>
+        <h4>مشكلة حقيقية وقابلة للقياس</h4>
+        <p>يعتمد أكثر من 70% من الشركات الصغيرة في المنطقة على أدوات يدوية لإدارة HR، مما يُفقدها وقتاً وكفاءة</p>
+      </div>
+    </div>
+    <div class="value-item">
+      <div class="value-icon">🏗️</div>
+      <div>
+        <h4>تحدي تقني متكامل</h4>
+        <p>يغطي المشروع: قواعد بيانات متعددة، نظام صلاحيات معقد، API RESTful، واجهة مستخدم تفاعلية</p>
+      </div>
+    </div>
+    <div class="value-item">
+      <div class="value-icon">📚</div>
+      <div>
+        <h4>قيمة أكاديمية عالية</h4>
+        <p>يتقاطع مع مواد: قواعد البيانات، هندسة البرمجيات، نظم المعلومات، أمن المعلومات، وتجربة المستخدم</p>
+      </div>
+    </div>
+    <div class="value-item">
+      <div class="value-icon">🚀</div>
+      <div>
+        <h4>قابل للنشر الفعلي</h4>
+        <p>المشروع مبني بتقنيات حديثة وقابل للنشر فعلياً كمنتج حقيقي بعد التخرج مباشرة</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--                  PAGE 3 — PROBLEM & OPPORTUNITY             -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">٢</div>
+    <div>
+      <div class="page-title">المشكلة والفرصة</div>
+      <div class="page-subtitle">لماذا السوق بحاجة لهذا الحل؟</div>
+    </div>
+  </div>
+
+  <div class="section-title">التحديات الحالية في إدارة الموارد البشرية</div>
+
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="problem-icon">📄</div>
+      <div class="problem-title">الاعتماد على الورق والإكسيل</div>
+      <div class="problem-desc">معظم الشركات تحتفظ ببيانات الموظفين في ملفات إكسيل منفصلة مما يؤدي لأخطاء متكررة وضياع البيانات</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">⏰</div>
+      <div class="problem-title">ضياع الوقت في المهام الروتينية</div>
+      <div class="problem-desc">متابعة الحضور والغياب والإجازات يدوياً يستهلك ساعات من وقت HR يمكن توجيهها لأعمال أكثر قيمة</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">💰</div>
+      <div class="problem-title">أنظمة الـ HR المتاحة غالية</div>
+      <div class="problem-desc">الحلول الاحترافية مثل SAP وWorkday مكلفة جداً ولا تناسب ميزانية الشركات الصغيرة والمتوسطة</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">📊</div>
+      <div class="problem-title">غياب التقارير والتحليلات</div>
+      <div class="problem-desc">صعوبة استخراج تقارير دقيقة عن الأداء ومعدل دوران الموظفين وتكاليف الرواتب بشكل فوري</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">🔒</div>
+      <div class="problem-title">ضعف أمان البيانات</div>
+      <div class="problem-desc">البيانات الحساسة للموظفين مخزنة في ملفات غير محمية وقابلة للوصول من أي شخص</div>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">📱</div>
+      <div class="problem-title">غياب الوصول عن بُعد</div>
+      <div class="problem-desc">الموظفون لا يستطيعون طلب إجازة أو الاطلاع على مستحقاتهم إلا بحضور مادي في مكتب الـ HR</div>
+    </div>
+  </div>
+
+  <div class="section-title">الفرصة في السوق</div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px;">
+    <div class="card card-blue">
+      <h4 style="font-weight: 700; color: var(--primary); margin-bottom: 12px; font-size: 15px;">🎯 الشريحة المستهدفة</h4>
+      <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px;">
+        <li style="font-size: 13px; color: #1E40AF; display: flex; gap: 8px; align-items: center;"><span>▸</span> شركات من ٢٠ إلى ٥٠٠ موظف</li>
+        <li style="font-size: 13px; color: #1E40AF; display: flex; gap: 8px; align-items: center;"><span>▸</span> الشركات الناشئة في مرحلة النمو</li>
+        <li style="font-size: 13px; color: #1E40AF; display: flex; gap: 8px; align-items: center;"><span>▸</span> المؤسسات التعليمية والجمعيات</li>
+        <li style="font-size: 13px; color: #1E40AF; display: flex; gap: 8px; align-items: center;"><span>▸</span> المكاتب والعيادات والمتاجر</li>
+      </ul>
+    </div>
+    <div class="card" style="background: linear-gradient(135deg, #F0FDF4, #DCFCE7); border-color: #A7F3D0;">
+      <h4 style="font-weight: 700; color: #065F46; margin-bottom: 12px; font-size: 15px;">✅ ميزة الحل المقترح</h4>
+      <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px;">
+        <li style="font-size: 13px; color: #047857; display: flex; gap: 8px; align-items: center;"><span>▸</span> سعر اشتراك شهري ميسور</li>
+        <li style="font-size: 13px; color: #047857; display: flex; gap: 8px; align-items: center;"><span>▸</span> بدون تثبيت — يعمل من المتصفح</li>
+        <li style="font-size: 13px; color: #047857; display: flex; gap: 8px; align-items: center;"><span>▸</span> واجهة عربية سهلة الاستخدام</li>
+        <li style="font-size: 13px; color: #047857; display: flex; gap: 8px; align-items: center;"><span>▸</span> دعم متعدد الشركات (Multi-tenant)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--                  PAGE 4 — OBJECTIVES & USERS                -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">٣</div>
+    <div>
+      <div class="page-title">الأهداف والمستخدمون</div>
+      <div class="page-subtitle">ما نريد تحقيقه ومن سيستفيد</div>
+    </div>
+  </div>
+
+  <div class="section-title">أهداف المشروع</div>
+
+  <div class="objectives-grid">
+    <div class="objective-item">
+      <div class="obj-num">١</div>
+      <div class="obj-text">بناء نظام SaaS حقيقي يدعم <strong>تعدد المستأجرين (Multi-tenancy)</strong> مع عزل تام للبيانات بين الشركات</div>
+    </div>
+    <div class="objective-item">
+      <div class="obj-num">٢</div>
+      <div class="obj-text">تطوير <strong>نظام صلاحيات (RBAC)</strong> متكامل يدعم أدواراً متعددة بمستويات وصول مختلفة</div>
+    </div>
+    <div class="objective-item">
+      <div class="obj-num">٣</div>
+      <div class="obj-text">أتمتة العمليات اليدوية المتكررة مثل <strong>حساب الرواتب، تتبع الحضور، وإدارة طلبات الإجازة</strong></div>
+    </div>
+    <div class="objective-item">
+      <div class="obj-num">٤</div>
+      <div class="obj-text">توفير <strong>لوحة تحليلات ذكية</strong> تمنح الإدارة رؤية واضحة لمؤشرات الأداء البشري</div>
+    </div>
+    <div class="objective-item">
+      <div class="obj-num">٥</div>
+      <div class="obj-text">تصميم <strong>تجربة مستخدم سلسة</strong> تُمكّن الموظفين من إدارة شؤونهم ذاتياً دون الحاجة للتواصل مع HR</div>
+    </div>
+    <div class="objective-item">
+      <div class="obj-num">٦</div>
+      <div class="obj-text">تطبيق معايير <strong>أمن المعلومات</strong> الحديثة: تشفير البيانات، المصادقة الثنائية، وسجل العمليات</div>
+    </div>
+  </div>
+
+  <div class="section-title">المستخدمون وأدوارهم</div>
+
+  <div class="roles-grid">
+    <div class="role-card admin">
+      <div class="role-avatar">👑</div>
+      <div class="role-name">مدير النظام</div>
+      <div class="role-desc">مسؤول عن إعداد المنصة وإدارة حسابات الشركات المشتركة</div>
+      <ul class="role-perms">
+        <li>إدارة حسابات الشركات</li>
+        <li>ضبط خطط الاشتراك</li>
+        <li>مراقبة أداء النظام</li>
+        <li>إدارة المستخدمين العموميين</li>
+        <li>التقارير والإحصاءات الكلية</li>
+      </ul>
+    </div>
+    <div class="role-card hr">
+      <div class="role-avatar">🧑‍💼</div>
+      <div class="role-name">مدير الموارد البشرية</div>
+      <div class="role-desc">يدير جميع شؤون الموظفين داخل شركته بصلاحيات كاملة</div>
+      <ul class="role-perms">
+        <li>إضافة وتعديل الموظفين</li>
+        <li>إدارة الرواتب والبدلات</li>
+        <li>الموافقة على الإجازات</li>
+        <li>تقييم الأداء</li>
+        <li>توليد تقارير الشركة</li>
+      </ul>
+    </div>
+    <div class="role-card employee">
+      <div class="role-avatar">👤</div>
+      <div class="role-name">الموظف</div>
+      <div class="role-desc">يصل لبياناته الشخصية ويتفاعل مع النظام بشكل مستقل</div>
+      <ul class="role-perms">
+        <li>عرض بيانات الراتب</li>
+        <li>طلب إجازات</li>
+        <li>تسجيل الحضور والانصراف</li>
+        <li>عرض نتائج التقييم</li>
+        <li>تحديث البيانات الشخصية</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--                  PAGE 5 — FEATURES                          -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">٤</div>
+    <div>
+      <div class="page-title">وحدات ومميزات النظام</div>
+      <div class="page-subtitle">Core Modules & Features</div>
+    </div>
+  </div>
+
+  <div class="modules-list">
+
+    <div class="module-row">
+      <div class="module-num">١</div>
+      <div class="module-icon">🧑‍🤝‍🧑</div>
+      <div class="module-info">
+        <h4>إدارة الموظفين — Employee Management</h4>
+        <p>قاعدة بيانات مركزية لجميع بيانات الموظفين: الشخصية، الوظيفية، والمالية. يدعم الهيكل التنظيمي والأقسام</p>
+      </div>
+      <div class="module-tags">
+        <span class="tag">ملف الموظف</span>
+        <span class="tag">الهيكل التنظيمي</span>
+        <span class="tag">الوثائق</span>
+      </div>
+    </div>
+
+    <div class="module-row">
+      <div class="module-num">٢</div>
+      <div class="module-icon">⏱️</div>
+      <div class="module-info">
+        <h4>الحضور والانصراف — Attendance & Time Tracking</h4>
+        <p>تتبع ساعات العمل بدقة، رصد التأخيرات، حساب الأوفر تايم، ودعم أجهزة البصمة أو تطبيق الهاتف</p>
+      </div>
+      <div class="module-tags">
+        <span class="tag">بصمة القزحية</span>
+        <span class="tag green">تقارير يومية</span>
+        <span class="tag">أوفر تايم</span>
+      </div>
+    </div>
+
+    <div class="module-row">
+      <div class="module-num">٣</div>
+      <div class="module-icon">🏖️</div>
+      <div class="module-info">
+        <h4>إدارة الإجازات والغياب — Leave Management</h4>
+        <p>نظام طلب وموافقة على الإجازات مع رصيد تلقائي، ودعم أنواع متعددة: سنوية، مرضية، طارئة، إلخ</p>
+      </div>
+      <div class="module-tags">
+        <span class="tag">رصيد تلقائي</span>
+        <span class="tag green">سير عمل موافقة</span>
+        <span class="tag purple">تقويم الفريق</span>
+      </div>
+    </div>
+
+    <div class="module-row">
+      <div class="module-num">٤</div>
+      <div class="module-icon">💵</div>
+      <div class="module-info">
+        <h4>إدارة الرواتب — Payroll Management</h4>
+        <p>حساب الرواتب الشهرية تلقائياً مع الخصومات والبدلات والمكافآت، وتوليد قسائم الراتب PDF</p>
+      </div>
+      <div class="module-tags">
+        <span class="tag">حساب تلقائي</span>
+        <span class="tag green">قسيمة PDF</span>
+        <span class="tag">ضريبة ومكافأة</span>
+      </div>
+    </div>
+
+    <div class="module-row">
+      <div class="module-num">٥</div>
+      <div class="module-icon">⭐</div>
+      <div class="module-info">
+        <h4>تقييم الأداء — Performance Reviews</h4>
+        <p>دورات تقييم دورية مع أهداف قابلة للقياس، تغذية راجعة من المدير، وتقارير التطور الوظيفي</p>
+      </div>
+      <div class="module-tags">
+        <span class="tag purple">KPIs</span>
+        <span class="tag">أهداف ذكية</span>
+        <span class="tag green">تغذية راجعة</span>
+      </div>
+    </div>
+
+    <div class="module-row">
+      <div class="module-num">٦</div>
+      <div class="module-icon">🎓</div>
+      <div class="module-info">
+        <h4>إعداد الموظفين الجدد — Onboarding</h4>
+        <p>قوائم مهام تلقائية للموظفين الجدد، تحميل الوثائق، التوقيع الإلكتروني، وتتبع اكتمال الإعداد</p>
+      </div>
+      <div class="module-tags">
+        <span class="tag">قائمة مهام</span>
+        <span class="tag green">توقيع إلكتروني</span>
+        <span class="tag purple">تتبع التقدم</span>
+      </div>
+    </div>
+
+    <div class="module-row">
+      <div class="module-num">٧</div>
+      <div class="module-icon">📊</div>
+      <div class="module-info">
+        <h4>التقارير والتحليلات — Analytics Dashboard</h4>
+        <p>لوحة بيانات تفاعلية: معدل الدوران الوظيفي، تكلفة الموظفين، نسب الحضور، والتحليلات التنبؤية</p>
+      </div>
+      <div class="module-tags">
+        <span class="tag purple">Charts تفاعلية</span>
+        <span class="tag">تصدير Excel</span>
+        <span class="tag green">تقارير مجدولة</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--                  PAGE 6 — TECH STACK                        -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">٥</div>
+    <div>
+      <div class="page-title">التقنيات المستخدمة</div>
+      <div class="page-subtitle">Tech Stack — Angular · .NET Web API · SQL Server · VPS</div>
+    </div>
+  </div>
+
+  <div class="section-title">مكونات النظام التقنية</div>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-emoji">🅰️</div>
+      <div class="tech-category">Frontend</div>
+      <div class="tech-name">Angular</div>
+      <div class="tech-desc">واجهة المستخدم التفاعلية</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-emoji">💜</div>
+      <div class="tech-category">Backend</div>
+      <div class="tech-name">.NET Web API</div>
+      <div class="tech-desc">الخادم وواجهات API</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-emoji">🗄️</div>
+      <div class="tech-category">Database</div>
+      <div class="tech-name">SQL Server</div>
+      <div class="tech-desc">قاعدة البيانات الرئيسية</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-emoji">🔐</div>
+      <div class="tech-category">Auth</div>
+      <div class="tech-name">JWT + ASP.NET Identity</div>
+      <div class="tech-desc">نظام المصادقة والتوثيق</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-emoji">🖥️</div>
+      <div class="tech-category">Hosting</div>
+      <div class="tech-name">VPS Server</div>
+      <div class="tech-desc">نشر على خادم افتراضي خاص</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-emoji">🔴</div>
+      <div class="tech-category">Cache</div>
+      <div class="tech-name">Redis</div>
+      <div class="tech-desc">تخزين مؤقت وأداء</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-emoji">📧</div>
+      <div class="tech-category">Notifications</div>
+      <div class="tech-name">SMTP / SendGrid</div>
+      <div class="tech-desc">إشعارات البريد الإلكتروني</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-emoji">🐳</div>
+      <div class="tech-category">DevOps</div>
+      <div class="tech-name">IIS / Docker</div>
+      <div class="tech-desc">نشر وإدارة الخادم</div>
+    </div>
+  </div>
+
+  <div class="section-title">مقارنة مع الحلول الموجودة</div>
+
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>الميزة</th>
+        <th>Organiza (مشروعنا)</th>
+        <th>إكسيل تقليدي</th>
+        <th>SAP SuccessFactors</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>سهولة الاستخدام</td>
+        <td><span class="check-yes">✓</span> عالية جداً</td>
+        <td><span class="check-yes">✓</span> متوسطة</td>
+        <td><span class="check-no">✗</span> معقدة</td>
+      </tr>
+      <tr>
+        <td>التكلفة</td>
+        <td><span class="check-yes">✓</span> اشتراك ميسور</td>
+        <td><span class="check-yes">✓</span> مجاني</td>
+        <td><span class="check-no">✗</span> مرتفعة جداً</td>
+      </tr>
+      <tr>
+        <td>الوصول عن بُعد</td>
+        <td><span class="check-yes">✓</span> من أي مكان</td>
+        <td><span class="check-no">✗</span> غير متاح</td>
+        <td><span class="check-yes">✓</span> متاح</td>
+      </tr>
+      <tr>
+        <td>أتمتة الرواتب</td>
+        <td><span class="check-yes">✓</span> تلقائي بالكامل</td>
+        <td><span class="check-no">✗</span> يدوي</td>
+        <td><span class="check-yes">✓</span> متاح</td>
+      </tr>
+      <tr>
+        <td>تقارير وتحليلات</td>
+        <td><span class="check-yes">✓</span> لوحة تفاعلية</td>
+        <td><span class="check-no">✗</span> محدودة</td>
+        <td><span class="check-yes">✓</span> متقدمة</td>
+      </tr>
+      <tr>
+        <td>أمان البيانات</td>
+        <td><span class="check-yes">✓</span> تشفير كامل</td>
+        <td><span class="check-no">✗</span> ضعيف</td>
+        <td><span class="check-yes">✓</span> عالي</td>
+      </tr>
+      <tr>
+        <td>مناسب للـ SMEs</td>
+        <td><span class="check-yes">✓</span> مصمم لها</td>
+        <td><span class="check-yes">✓</span> يُستخدم</td>
+        <td><span class="check-no">✗</span> للمؤسسات الكبرى</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<!--                  PAGE 7 — TIMELINE                          -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">٦</div>
+    <div>
+      <div class="page-title">خطة العمل والجدول الزمني</div>
+      <div class="page-subtitle">Project Timeline — ٥ مراحل على مدى ٢٠ أسبوعاً</div>
+    </div>
+  </div>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-phase">
+        <div class="timeline-phase-label">المرحلة ١</div>
+        <div class="timeline-phase-duration">أسبوع ١–٣</div>
+      </div>
+      <div class="timeline-dot dot-1">🔍</div>
+      <div class="timeline-content">
+        <h4>التخطيط وتحليل المتطلبات</h4>
+        <div class="timeline-tasks">
+          <li>دراسة المشكلة ومقابلة المستخدمين</li>
+          <li>توثيق متطلبات النظام (SRS)</li>
+          <li>رسم خرائط العمليات</li>
+          <li>تصميم قاعدة البيانات</li>
+          <li>إعداد بيئة التطوير</li>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-phase">
+        <div class="timeline-phase-label">المرحلة ٢</div>
+        <div class="timeline-phase-duration">أسبوع ٤–٧</div>
+      </div>
+      <div class="timeline-dot dot-2">🏗️</div>
+      <div class="timeline-content">
+        <h4>بناء الأساس والبنية التحتية</h4>
+        <div class="timeline-tasks">
+          <li>إعداد قاعدة البيانات</li>
+          <li>نظام المصادقة والتسجيل</li>
+          <li>نظام الصلاحيات RBAC</li>
+          <li>إعداد Multi-tenancy</li>
+          <li>واجهة المستخدم الأساسية</li>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-phase">
+        <div class="timeline-phase-label">المرحلة ٣</div>
+        <div class="timeline-phase-duration">أسبوع ٨–١٣</div>
+      </div>
+      <div class="timeline-dot dot-3">⚙️</div>
+      <div class="timeline-content">
+        <h4>تطوير الوحدات الرئيسية</h4>
+        <div class="timeline-tasks">
+          <li>وحدة إدارة الموظفين</li>
+          <li>نظام الحضور والانصراف</li>
+          <li>إدارة الإجازات</li>
+          <li>حساب الرواتب</li>
+          <li>نظام الإشعارات</li>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-phase">
+        <div class="timeline-phase-label">المرحلة ٤</div>
+        <div class="timeline-phase-duration">أسبوع ١٤–١٧</div>
+      </div>
+      <div class="timeline-dot dot-4">✨</div>
+      <div class="timeline-content">
+        <h4>المميزات المتقدمة والتحليلات</h4>
+        <div class="timeline-tasks">
+          <li>لوحة التحليلات والتقارير</li>
+          <li>تقييم الأداء</li>
+          <li>نظام الـ Onboarding</li>
+          <li>تصدير PDF وExcel</li>
+          <li>اختبارات الأداء</li>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-phase">
+        <div class="timeline-phase-label">المرحلة ٥</div>
+        <div class="timeline-phase-duration">أسبوع ١٨–٢٠</div>
+      </div>
+      <div class="timeline-dot dot-5">🚀</div>
+      <div class="timeline-content">
+        <h4>الاختبار والنشر والتوثيق</h4>
+        <div class="timeline-tasks">
+          <li>اختبارات المستخدم (UAT)</li>
+          <li>إصلاح الأخطاء</li>
+          <li>نشر على السحابة</li>
+          <li>توثيق النظام</li>
+          <li>إعداد عرض التخرج</li>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 14px; padding: 20px; margin-top: 24px; display: flex; gap: 14px; align-items: flex-start;">
+    <span style="font-size: 22px;">⚠️</span>
+    <div>
+      <div style="font-weight: 700; color: #92400E; margin-bottom: 6px; font-size: 14px;">ملاحظة على توزيع العمل</div>
+      <div style="font-size: 13px; color: #78350F; line-height: 1.7;">يُنصح بتقسيم الفريق (٣–٤ أشخاص) بحيث يتخصص كل عضو في وحدة رئيسية: Frontend Developer، Backend Developer، Database & Security، و UI/UX & Testing. يساعد هذا التوزيع في تسريع التطوير وتوضيح مساهمة كل فرد في لجنة المناقشة.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--                  PAGE 8 — DELIVERABLES & CONCLUSION         -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-num">٧</div>
+    <div>
+      <div class="page-title">المخرجات والقيمة الأكاديمية</div>
+      <div class="page-subtitle">Deliverables & Academic Value</div>
+    </div>
+  </div>
+
+  <div class="section-title">المخرجات النهائية للمشروع</div>
+
+  <div class="deliverables-grid">
+    <div class="deliverable-card">
+      <div class="deliverable-icon">🌐</div>
+      <div class="deliverable-title">تطبيق ويب كامل</div>
+      <div class="deliverable-desc">منصة SaaS تعمل فعلياً ومنشورة على الإنترنت قابلة للوصول والتجربة</div>
+    </div>
+    <div class="deliverable-card">
+      <div class="deliverable-icon">📚</div>
+      <div class="deliverable-title">توثيق النظام</div>
+      <div class="deliverable-desc">وثائق تقنية شاملة: SRS، هيكل البيانات، توثيق API، ودليل المستخدم</div>
+    </div>
+    <div class="deliverable-card">
+      <div class="deliverable-icon">🔌</div>
+      <div class="deliverable-title">واجهة API موثقة</div>
+      <div class="deliverable-desc">RESTful API كاملة موثقة باستخدام Swagger/Postman وجاهزة للتوسع</div>
+    </div>
+    <div class="deliverable-card">
+      <div class="deliverable-icon">🎨</div>
+      <div class="deliverable-title">تصميم UI/UX</div>
+      <div class="deliverable-desc">نماذج Figma للواجهات مع دراسة تجربة المستخدم وخرائط التنقل</div>
+    </div>
+    <div class="deliverable-card">
+      <div class="deliverable-icon">🧪</div>
+      <div class="deliverable-title">تقرير الاختبارات</div>
+      <div class="deliverable-desc">تقارير اختبارات الوحدة والتكامل والأداء مع نتائج موثقة</div>
+    </div>
+    <div class="deliverable-card">
+      <div class="deliverable-icon">🎤</div>
+      <div class="deliverable-title">عرض مناقشة التخرج</div>
+      <div class="deliverable-desc">عرض تقديمي احترافي مع ديمو مباشر للنظام أمام لجنة التحكيم</div>
+    </div>
+  </div>
+
+  <div class="section-title">القيمة الأكاديمية للمشروع</div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px;">
+    <div style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 14px; padding: 20px;">
+      <h4 style="font-weight: 700; color: #1E40AF; margin-bottom: 12px; font-size: 14px;">📘 المهارات المكتسبة</h4>
+      <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px;">
+        <li style="font-size: 13px; color: #1D4ED8; display: flex; gap: 8px;"><span>✓</span>تصميم قواعد بيانات معقدة وعلاقاتها</li>
+        <li style="font-size: 13px; color: #1D4ED8; display: flex; gap: 8px;"><span>✓</span>بناء RESTful APIs بـ .NET</li>
+        <li style="font-size: 13px; color: #1D4ED8; display: flex; gap: 8px;"><span>✓</span>تطوير واجهات Angular تفاعلية</li>
+        <li style="font-size: 13px; color: #1D4ED8; display: flex; gap: 8px;"><span>✓</span>تطبيق معايير أمن المعلومات</li>
+        <li style="font-size: 13px; color: #1D4ED8; display: flex; gap: 8px;"><span>✓</span>نشر التطبيقات على السحابة</li>
+      </ul>
+    </div>
+    <div style="background: #F0FDF4; border: 1px solid #A7F3D0; border-radius: 14px; padding: 20px;">
+      <h4 style="font-weight: 700; color: #065F46; margin-bottom: 12px; font-size: 14px;">🎯 ما يميز المشروع أكاديمياً</h4>
+      <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px;">
+        <li style="font-size: 13px; color: #047857; display: flex; gap: 8px;"><span>✓</span>يحل مشكلة حقيقية ومُوثقة بالبيانات</li>
+        <li style="font-size: 13px; color: #047857; display: flex; gap: 8px;"><span>✓</span>يجمع بين تخصصات متعددة</li>
+        <li style="font-size: 13px; color: #047857; display: flex; gap: 8px;"><span>✓</span>قابل للتحويل لمنتج تجاري حقيقي</li>
+        <li style="font-size: 13px; color: #047857; display: flex; gap: 8px;"><span>✓</span>يدعم نموذج SaaS الحديث</li>
+        <li style="font-size: 13px; color: #047857; display: flex; gap: 8px;"><span>✓</span>مخرجات قابلة للقياس والتحقق</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <h3>الخلاصة — لماذا يجب قبول هذا المشروع؟</h3>
+    <p>
+      مشروع <strong>Organiza</strong> ليس مجرد تطبيق أكاديمي — بل هو منتج رقمي حقيقي يُعالج تحدياً ملموساً يواجهه السوق المحلي. يجمع المشروع بين العمق التقني المطلوب لمشاريع التخرج والأثر العملي الواضح، مع خطة عمل واضحة وقابلة للتنفيذ خلال الفترة الزمنية المحددة. نحن واثقون من أن هذا المشروع سيُشكّل قفزة نوعية في مسيرتنا المهنية ويُقدم قيمة حقيقية للمجتمع.
+    </p>
+  </div>
+
+  <div style="text-align: center; margin-top: 40px; padding: 24px; border-top: 2px solid var(--border);">
+    <div style="font-size: 13px; color: var(--muted);">مشروع تخرج — Organiza HR Portal SaaS Platform</div>
+    <div style="font-size: 12px; color: #CBD5E1; margin-top: 4px;">بروبوزال مقدم لاستيفاء متطلبات الحصول على درجة البكالوريوس</div>
+  </div>
+</div>
+
+</body>
+</html>
